@@ -2,6 +2,7 @@ var path = require('path');
 var request = require('request');
 var HmacSHA256 = require('crypto-js/hmac-sha256');
 var base64 = require('crypto-js/enc-base64');
+var _ = require('lodash');
 
 var initializeAmazon = function (initOptions) {
   return function (options) {
@@ -20,9 +21,10 @@ var initializeAmazon = function (initOptions) {
     for (param in options.params) {
       paramsArr.push([param, options.params[param]]);
     }
-    paramsArr.sort(function (a, b) {
-      return a[0] > b[0];
-    });
+    paramsArr = _.sortBy(paramsArr,[function(o){ return o[0];}]);
+//     paramsArr.sort(function (a, b) {
+//       return a[0] > b[0];
+//     });
 
     var keys = [];
     var vals = [];
